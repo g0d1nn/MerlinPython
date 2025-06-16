@@ -48,8 +48,9 @@ if opcao == "Entrar":
     if input_button:
         usuario_dao = UsuarioDAO()
         usuario = usuario_dao.buscar_por_email(input_email)
+        st.write(usuario)
 
-        if usuario:
+        if usuario and usuario[3] == input_senha:
             st.session_state.usuario_logado = usuario[1]
             st.session_state.permissao = usuario[4]
             st.success(f"Bem-vindo, {usuario[1]}!")
@@ -161,7 +162,6 @@ if opcao == "Gerenciar Usuários":
                     novo_nome = st.text_input("Novo nome", value=nome, key=f"nome_{id_usuario}")
                     novo_email = st.text_input("Novo email", value=email, key=f"email_{id_usuario}")
                     novo_senha = st.text_input("Nova senha", type="password", key=f"senha_{id_usuario}")
-                    senha = novo_senha if novo_senha else senha  # Mantém a senha atual se não for alterada
                     nova_permissao = st.selectbox(
                         "Selecione o tipo de usuário",
                         options = ["padrao", "admin"],
@@ -173,6 +173,7 @@ if opcao == "Gerenciar Usuários":
 
                     with col1:
                         if st.button("Salvar", key=f"salvar_{id_usuario}"):
+                            senha = novo_senha if novo_senha else senha  # Mantém a senha antiga se não for alterada
                             usuario_atualizado = Usuario(id=id_usuario, nome=novo_nome, email=novo_email, senha=senha, permissao=nova_permissao)
                             usuario_dao.atualizar(usuario_atualizado)
                             st.success("Usuário atualizado com sucesso!")
