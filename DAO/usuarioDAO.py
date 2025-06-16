@@ -21,8 +21,8 @@ class UsuarioDAO:
         return self.cursor.fetchall()
     
     def atualizar(self, usuario):
-        sql = " UPDATE usuario SET nome = %s, email = %s, permissao = %s WHERE id_usuario = %s "
-        self.cursor.execute(sql, (usuario.nome, usuario.email, usuario.permissao, usuario.id))
+        sql = " UPDATE usuario SET nome = %s, email = %s, senha = %s, permissao = %s WHERE id_usuario = %s "
+        self.cursor.execute(sql, (usuario.nome, usuario.email, usuario.senha, usuario.permissao, usuario.id))
         self.conexao.commit()
 
     def deletar(self, id):

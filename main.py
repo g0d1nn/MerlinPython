@@ -48,7 +48,6 @@ if opcao == "Entrar":
     if input_button:
         usuario_dao = UsuarioDAO()
         usuario = usuario_dao.buscar_por_email(input_email)
-        st.write(usuario)
 
         if usuario and usuario[3] == input_senha:
             st.session_state.usuario_logado = usuario[1]
